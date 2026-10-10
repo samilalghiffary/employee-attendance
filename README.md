@@ -1,74 +1,103 @@
-# Employee Attendance System Architecture
+# Employee Attendance System
 
-Struktur proyek terpisah antara **Backend** dan **Frontend** dengan teknologi versi terbaru.
+A modern full-stack employee attendance tracking application featuring decoupled architecture between **Backend** (NestJS) and **Frontend** (Next.js), managed via **Git Submodules**.
 
 ---
 
-## 📁 Struktur Direktori
+## 📦 Cloning & Setup Guide
 
-```text
-employee-attendance/
-├── backend/                  # NestJS + TypeScript + Prisma + PostgreSQL
-│   ├── src/
-│   │   ├── prisma/           # Prisma contract & schema & client db
-│   │   │   ├── contract.prisma
-│   │   │   └── db.ts
-│   │   ├── prisma.service.ts # Injectable Prisma Service untuk modul NestJS
-│   │   ├── app.controller.ts
-│   │   ├── app.module.ts     # ConfigModule & PrismaService terdaftar
-│   │   ├── app.service.ts
-│   │   └── main.ts           # CORS diaktifkan, port 3001, global prefix '/api'
-│   ├── .env                  # DATABASE_URL PostgreSQL
-│   ├── package.json
-│   └── tsconfig.json
-│
-└── frontend/                 # Next.js 16 (App Router) + React 19 + TypeScript
-    ├── src/
-    │   ├── app/
-    │   │   ├── layout.tsx    # TanStack Query Client Provider terpasang
-    │   │   ├── page.tsx      # Dashboard preview terintegrasi
-    │   │   └── globals.css   # Tailwind CSS v4 & theme variables
-    │   ├── components/
-    │   │   ├── providers.tsx # QueryClientProvider + ReactQueryDevtools
-    │   │   └── ui/           # Shadcn UI (button, card, badge, input, table, skeleton)
-    │   ├── lib/
-    │   │   ├── api-client.ts # Axios client instance (baseURL http://localhost:3001/api)
-    │   │   └── utils.ts      # cn utility untuk tailwind & clsx
-    │   └── stores/
-    │       └── use-attendance-store.ts # Zustand global store
-    ├── package.json
-    └── tsconfig.json
+Two setup workflows are available:
+
+---
+
+### Option 1: Clone via Parent Repository (Recommended - Fullstack)
+
+Best for managing both Backend and Frontend within a single parent workspace.
+
+#### A. Clone With Submodules
+```bash
+git clone --recurse-submodules https://github.com/samilalghiffary/employee-attendance.git
+cd employee-attendance
+```
+
+#### B. If Cloned Normally (Without Submodule Flag)
+If `backend/` or `frontend/` folders are empty:
+```bash
+git submodule update --init --recursive
+```
+
+#### C. Pull Latest Changes across Submodules
+```bash
+git submodule update --remote --merge
 ```
 
 ---
 
-## 🚀 Panduan Menjalankan
+### Option 2: Clone Standalone (Independent FE / BE)
 
-### 1. Menjalankan Backend (`NestJS`)
+Best for working exclusively on a single service without Git Submodules.
 
-Buka terminal pertama:
+#### Backend Only
+```bash
+git clone https://github.com/samilalghiffary/employee-attendance-be.git
+cd employee-attendance-be
+npm install
+# Configure .env (DATABASE_URL)
+npm run start:dev
+```
+
+#### Frontend Only
+```bash
+git clone https://github.com/samilalghiffary/employee-attendance-fe.git
+cd employee-attendance-fe
+npm install
+npm run dev
+```
+
+---
+
+## 📁 Project Structure
+
+```text
+employee-attendance/
+├── .gitmodules       # Submodule configuration for backend & frontend
+├── backend/          # NestJS application (API, Prisma ORM, PostgreSQL)
+└── frontend/         # Next.js application (App Router, Tailwind CSS, TanStack Query)
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1. Backend (`NestJS`)
 
 ```bash
 cd backend
 
-# 1. Sesuaikan string koneksi database PostgreSQL di file .env:
+# Install dependencies:
+npm install
+
+# Setup environment variables in .env:
 # DATABASE_URL="postgresql://user:password@localhost:5432/employee_attendance?schema=public"
 
-# 2. Jalankan development server:
+# Run development server:
 npm run start:dev
 ```
-*Backend akan berjalan di:* `http://localhost:3001/api`
+
+_Backend runs at:_ `http://localhost:3001/api`
 
 ---
 
-### 2. Menjalankan Frontend (`Next.js`)
-
-Buka terminal kedua:
+### 2. Frontend (`Next.js`)
 
 ```bash
 cd frontend
 
-# Jalankan Next.js development server:
+# Install dependencies:
+npm install
+
+# Run development server:
 npm run dev
 ```
-*Frontend akan berjalan di:* `http://localhost:3000`
+
+_Frontend runs at:_ `http://localhost:3000`
