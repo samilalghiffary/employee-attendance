@@ -1,0 +1,6 @@
+[submodule "backend"]
+	path = backend
+	url = https://github.com/samilalghiffary/employee-attendance-be
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/samilalghiffary/employee-attendance-fe
